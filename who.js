@@ -1,47 +1,54 @@
 /**********************
 ** whoisjohngalm.com **
+**       2013        **
 **********************/
 
-var who = function() {
-  var width; var height; var xpos; var ypos;
+!function(num, rate) {
+  var colors = [
+    'fff', 
+    'deedee', 
+    '426f42', 
+    '666', 
+    'ffff00', 
+    '00ffff', 
+    'ff1493', 
+    'adff2f', 
+    'ff0000'],
+  colsCount = colors.length,
+  width = window.innerWidth, 
+  height = window.innerHeight, 
+  body = document.body,
   
-  var width = window.innerWidth;
-  var height = window.innerHeight;
-  var xpos = Math.floor((Math.random() * width));
-  var ypos = Math.floor((Math.random() * height));
-  return [xpos,ypos]
-}
-
-var whoIs = function(num) {
-  var i; var rand; var xpos; var ypos; var span; var qmar; var g;
-  var randcol;
-  var colors = ["fff", "deedee", "426f42", "666", "ffff00", "00ffff", "ff1493", "adff2f", "ff0000"];
-  var count = colors.length;
+  xpos, ypos, i, randcol, span, qmark;
   
-  var g = document.getElementById("g");
-  while(g.firstChild) {
-    g.removeChild(g.firstChild);
+  // let's start the show
+  setInterval(function () {
+    
+    // if we've got children hanging around, get 'em out of there
+    while(body.hasChildNodes()) {
+      body.removeChild(body.lastChild);
     }
-  
+    
     for(i = 0; i < num; i++) {
-    var rand = who();
-    var xpos = rand[0] + "px";
-    var ypos = rand[1] + "px";
-    var span  = document.createElement("span");
-    var qmark = document.createTextNode("?");
-    var randcol = colors[Math.floor((Math.random() * count))];
-    span.appendChild(qmark);
-    span.style.position = "absolute";
-    span.style.top = ypos;
-    span.style.left = xpos;
-    span.style.fontSize = "15em";
-    span.style.color = "#" + randcol;
-    document.getElementById("g").appendChild(span);
-  }
-}
+      // generate random x, y positions relative to the width/height
+      xpos = Math.floor((Math.random() * width)) + 'px';
+      ypos = Math.floor((Math.random() * width)) + 'px';
+      
+      // create a question mark within a span
+      span = document.createElement('span');    
+      qmark = document.createTextNode('?');
+      
+      // append the qmart onto the span
+      span.appendChild(qmark);
+            
+      // set the styles for the qmark
+      randcol = colors[Math.floor((Math.random() * colsCount))];
+      span.style.position = 'absolute';
+      span.style.top = ypos;
+      span.style.left = xpos;
+      span.style.color = '#' + randcol;
+      body.appendChild(span);
+    }
+  }, rate);
 
-var whoIsJohnGalm = function() {
-  setInterval(function(){
-    whoIs(15);
-    }, 250);
-}
+}(15, 250);
